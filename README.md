@@ -1,5 +1,12 @@
+具体位置：直接依赖 claude -p：scripts/run_eval.py:71、scripts/improve_description.py:26
+依赖 Claude Code 的项目结构与注入机制（写入 .claude/commands 让其出现在 available_skills）：scripts/run_eval.py:23、scripts/run_eval.py:30、scripts/run_eval.py:53
+触发判定硬编码 Claude Code 的 stream-json 事件格式 + tool 名（只认 Skill/Read）：scripts/run_eval.py:73、scripts/run_eval.py:75、scripts/run_eval.py:133、scripts/run_eval.py:137、scripts/run_eval.py:164、scripts/run_eval.py:166
+依赖 CLAUDECODE 环境变量语义（为允许嵌套 claude -p）：scripts/run_eval.py:83、scripts/improve_description.py:33
+skill 规范硬编码（frontmatter、1024 字符 description 上限等，未必适配别的平台）：scripts/quick_validate.py:42、scripts/quick_validate.py:83、scripts/improve_description.py:132、scripts/improve_description.py:163
+.skill 打包格式假设：scripts/package_skill.py:87
+
 命令行工具硬编码 (CLI Invocation)
-1.系统完全依赖本地安装的 claude 命令行工具来执行模型调用和测试：
+系统完全依赖本地安装的 claude 命令行工具来执行模型调用和测试：
 
 在 scripts/run_eval.py 中，执行测试的命令被硬编码为 ["claude", "-p", query, "--output-format", "stream-json", ...]。
 
